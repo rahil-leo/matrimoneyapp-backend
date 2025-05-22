@@ -3,10 +3,15 @@ const bcrypt = require('bcryptjs');
 
 
 const userSchema = new mongoose.Schema({
-    
+
     name: {
         type: String,
-        required: true 
+        required: true
+    },
+    userid: {
+        type: Number,
+        default: Date.now,
+        unique: true,
     },
     email: {
         type: String,
@@ -20,11 +25,12 @@ const userSchema = new mongoose.Schema({
 
     gender: {
         type: String,
-        
+
     },
+
     date: {
         type: String,
-        default:''
+        default: ''
     },
     age: {
         type: String,
@@ -32,16 +38,16 @@ const userSchema = new mongoose.Schema({
     },
     income: {
         type: String,
-        default:''
+        default: ''
     },
     matrialstatus: {
         type: String,
-        default:''
+        default: ''
     },
     religion: {
         type: String,
         default: ''
-    } ,
+    },
     district: {
         type: String,
         default: ''
@@ -56,15 +62,11 @@ const userSchema = new mongoose.Schema({
     },
     photo: {
         type: String,
-        default:''
+        default: ''
     },
     address: {
         type: String,
         default: ''
-    },
-    photo: {
-        type: String,
-        default:''
     },
     height: {
         type: String,
@@ -78,18 +80,16 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    intrested: {
-        type: Boolean,
-        default:false,
-    },
+
+
     notintrested: {
         type: Boolean,
         default: false,
     },
-    // approved: {
-    //     type: Boolean,
-    //     default: false,
-    // },
+    accepted: {
+        type: Boolean,
+        default: false,
+    },
     // declined: {
     //     type: Boolean,
     //     default: false,
@@ -113,4 +113,16 @@ userSchema.methods.validatePassword = async function (userPassword) {
 };
 
 module.exports = mongoose.model('User', userSchema);
+
+
+
+
+
+
+
+
+
+
+
+
 

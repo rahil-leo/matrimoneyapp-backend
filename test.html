@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <select name="" id="state" onchange="change()">
+        <option value="">here is the value</option>
+    </select>
+
+    <select name="" id="state1">
+        <option value="">here is the value</option>
+    </select>
+
+
+
+    <script>
+
+        var a = [{
+            state: 'kerala',
+            district: ['kozhikode', 'malapuram', 'palakad']
+
+        }, {
+            state: 'karnataka',
+            district: ['banglore', 'manglore']
+        }
+        ]
+
+        let state = document.getElementById('state')
+        a.forEach((i) => {
+            let option = document.createElement('option')
+            option.value = i.state
+            option.innerHTML = i.state
+            state.appendChild(option)
+        })
+
+        function change(){
+            var selectedState = document.getElementById('state1').value
+            var abc = a.find((i) => {
+                i.state = selectedState
+            })
+            let district = document.getElementById('state1')
+            abc.district.forEach((i) => {
+                let option = document.createElement('option')
+                option.value = i
+                option.innerHTML = i
+                district.appendChild(option)
+            })
+        }
+
+    </script>
+</body>
+
+</html>
