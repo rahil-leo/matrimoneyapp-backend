@@ -138,6 +138,7 @@ exports.requestMatches = async (req, res) => {
         if (!receiver) {
             return res.status(404).json({ message: 'Receiver not found' });
         }
+
         await Request.create({
             id: Date.now(),
             sender: sender.userid,
@@ -169,28 +170,17 @@ exports.requestMatches = async (req, res) => {
 
 
 
-// exports.checkRequest = async(req, res) => {
-//     try {
-//         const loggeduserid = await User.findById(req.user.id)
-//         console.log(loggeduserid.userid,'here is user id')
-//         const receiver = await Request.find({
-//             sender:loggeduserid.userid
-//         })
-//         console.log(receiver,'here is reciver')
-//         return res.status(200).json({ message: 'request send', requests: receiver })
-//     } catch (err) {
-//         console.log(err)
-//         return res.status(404).json({message:'server error',})
-//     }
-// }
 
 exports.getReceivedRequests = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id);
+        const user = await User.findById(req.user.id)
         if (!user) {
-            return res.json({ message: 'user not here' });
+            return res.json({ message: 'user not here' })
         }
-        const requests = await Request.find({ reciver: user.userid });
+        const requests = await Request.find({ reciver: user.userid, requested: { $eq: true } })
+        if (requests <=1) {
+            return res.status(404).json({message:'already sended request'})
+        }
 
         return res.status(200).json({ message: 'received requests', requests });
     } catch (err) {
@@ -198,6 +188,23 @@ exports.getReceivedRequests = async (req, res) => {
         return res.status(500).json({ message: 'server error' });
     }
 };
+
+exports.checkaccepted =async (req, res)=>{
+    try {
+        const { id } = req.body
+        console.log(id, 'here is the id')
+        const accepted = await Request.findOne({ id: id })
+        console.log(accepted)
+        accepted.accepted = true
+        await accepted.save()
+        return res.status(404).json({message:'user accepted',accepted:accepted})
+    } catch (err) {
+        console.log(err)
+        return res.status(404).json({message:'server error'})
+    }
+}
+
+
 
 
 

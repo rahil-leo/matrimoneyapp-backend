@@ -21,7 +21,16 @@ const requestschema = new mongoose.Schema({
     requested: {
         type: Boolean,
         default:false
-    }
+    },
+    accepted: {
+        type: Boolean,
+        default: false,
+    },
+    delined: {
+        type: Boolean,
+        default: false,
+    },
+
 })
 
 module.exports = mongoose.model('Request', requestschema);
